@@ -3,7 +3,9 @@ Instructions and tools for setting up a high-availability, scalable Raspberry Pi
 
 ## Overview
 
-This project demonstrates how to setup a high-availability, load-balanced web server using Raspberry Pi's. This documentation covers the procedure for a 4-unit stack, however the same instructions can easily be applied to any size stack from 3-unit to as many as you'd like. I chose 4-units because it demonstrates how to construct a complex infrastructure without overcomplicating the instructions.
+This project demonstrates how to setup a high-availability, load-balanced web server using Raspberry Pi's. I use this cluster in my home to run personal projects.
+
+This documentation covers the procedure for a 4-unit stack, however the same instructions can easily be applied to any size stack from 3-unit to as many as you'd like. I chose 4-units because it demonstrates how to construct a complex infrastructure without overcomplicating the instructions.
 
 Primary features of this project:
 
