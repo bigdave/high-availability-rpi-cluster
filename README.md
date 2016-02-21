@@ -69,3 +69,30 @@ Once that completes, we can eject the card, and it’s ready to insert into the 
 
     $ sudo diskutil eject /dev/rdisk2
     Disk /dev/rdisk2 ejected
+
+# Connecting to the Pi
+
+Insert your SD card into the Pi, connect an ethernet cable to it, and then connect power. Wait about a minute while your Pi boots and grabs an IP address.
+
+There are a few ways to figure out what the IP address of your PI is, but I find the easiest is to go into your router, look at the DHCP leases, and find the newest. Assuming you are on your home network, it should be something like 192.168.0.32. Armed with this knowledge, you should now be able to ssh into the device:
+
+    $ ssh pi@192.168.0.32
+If you have the right address, you’ll receive a warning about not knowing if the host is authentic, and asked if you want to proceed. You want to, so type yes. If you have the wrong address, you’ll see a message like this:
+
+    ssh: connect to host 192.168.0.32 port 22: Connection refused
+
+You will be prompted for a password, which will be raspberry. Type that (you won’t see the characters appear on the screen, for security reasons).
+
+Since this is your first time logging in, you should see a message like this:
+
+    NOTICE: the software on this Raspberry Pi has not been fully configured. Please run 'sudo raspi-config'
+
+Go ahead and do that now, and you’ll be presented with a menu and several options. For now, all we want to do is select the first option, ‘Expand Filesystem’, so that the entire SD card is available for use. Select that, and once it completes and you are returned to the menu, select ‘Finish’ using the arrow keys.
+
+Let’s make sure we have the latest versions of all of the pre-installed software before we proceed:
+
+    $ sudo apt-get update
+    $ sudo apt-get upgrade
+And if you want to install any other software as a convenience, now would be an acceptable time to do that:
+
+    $ sudo apt-get install tree
