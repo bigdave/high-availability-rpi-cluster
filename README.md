@@ -10,6 +10,7 @@ This documentation covers the procedure for a 4-unit stack, however the same ins
 Primary features of this project:
 
 * Raspberry Pi's! Who doesn't love them?
+* Raspbian Jessie (Lite)
 * Distributed Postgres database
 * Load balancing with [HAProxy](http://www.haproxy.org/)
 
@@ -70,6 +71,8 @@ Once that completes, we can eject the card, and it’s ready to insert into the 
     $ sudo diskutil eject /dev/rdisk2
     Disk /dev/rdisk2 ejected
 
+> **Cloning**: So this might be a good time to clone your SD card, rather than follow the same procedure 3 more times. If you can figure out how to do that, go ahead. You might also wait until you've completed more steps below so that you don't have to repeat those. This guide does not cover cloning SD cards. I expect you to have discipline, and type every command exactly - as many times as you need to.
+
 # Connecting to the Pi
 
 Insert your SD card into the Pi, connect an ethernet cable to it, and then connect power. Wait about a minute while your Pi boots and grabs an IP address.
@@ -96,3 +99,49 @@ Let’s make sure we have the latest versions of all of the pre-installed softwa
 And if you want to install any other software as a convenience, now would be an acceptable time to do that:
 
     $ sudo apt-get install tree
+
+# Configuring Servers
+
+In order to make things easier to manage, we're going to change the hostnames of each Raspberry Pi. I'm using the following, but your names can be whatever you like:
+
+    rpi-master
+    rpi-slave1
+    rpi-slave2
+    rpi-slave3
+
+Do this on each Pi by editing `/etc/hosts` and replacing `raspberrypi` on the final line with whatever hostname you choose.
+Next, edit `/etc/hostname` and replace `raspberrypi` with the same hostname again.
+Run the following commands to update the hostname and reboot:
+
+    $ sudo /etc/init.d/hostname.sh
+    $ sudo reboot
+
+## Master
+
+This is the server which will do our load balancing, distributing requests to the webservers. We will do this using HAProxy. There are a lot of tools available to do this, but I enjoy HAProxy because it's extremely easy to setup, and can be configured to work for a wide variety of applications.
+
+    $ sudo apt-get install haproxy
+    $ sudo service haproxy status
+    
+You should now be up and running with HAProxy. Of course now we have to configure it and tell it what to do. First, let's make a backup of the config for reference later:
+
+    $ cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.original
+
+Now let's enable logging. Edit `/etc/rsyslog.conf` and look for the following section, which will be commented out. Uncomment it and it should look pretty much like the following:
+
+    # provides UDP syslog reception
+    $ModLoad imudp
+    $UDPServerRun 514
+
+Restart the syslog service and logging should be working:
+
+    $ sudo service syslog restart
+
+## Slaves
+
+    $ sudo apt-get install git ruby ruby-dev
+
+Now install Rails. This may take some time (On a Raspberry Pi 2 Model B it took me an hour and a half)
+
+    $ sudo gem install rails
+    
