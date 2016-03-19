@@ -1,6 +1,8 @@
 # high-availability-rpi-cluster
 Instructions and tools for setting up a high-availability, scalable Raspberry Pi cluster to act as a web server
 
+![Image of my Raspberry Pi Cluster](http://res.cloudinary.com/ddrnjraio/image/upload/c_scale,h_412,w_289/v1458351469/rpi-stack.jpg)
+
 ## Overview
 
 This project demonstrates how to setup a high-availability, load-balanced web server using Raspberry Pi's. I use this cluster in my home to run personal projects.
