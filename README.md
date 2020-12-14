@@ -106,10 +106,10 @@ And if you want to install any other software as a convenience, now would be an 
 
 In order to make things easier to manage, we're going to change the hostnames of each Raspberry Pi. I'm using the following, but your names can be whatever you like:
 
-    rpi-master
-    rpi-slave1
-    rpi-slave2
-    rpi-slave3
+    rpi-leader
+    rpi-minion1
+    rpi-minion2
+    rpi-minion3
 
 Do this on each Pi by editing `/etc/hosts` and replacing `raspberrypi` on the final line with whatever hostname you choose.
 Next, edit `/etc/hostname` and replace `raspberrypi` with the same hostname again.
@@ -118,7 +118,7 @@ Run the following commands to update the hostname and reboot:
     $ sudo /etc/init.d/hostname.sh
     $ sudo reboot
 
-## Master
+## Leader
 
 This is the server which will do our load balancing, distributing requests to the webservers. We will do this using HAProxy. There are a lot of tools available to do this, but I enjoy HAProxy because it's extremely easy to setup, and can be configured to work for a wide variety of applications.
 
@@ -139,7 +139,7 @@ Restart the syslog service and logging should be working:
 
     $ sudo service syslog restart
 
-## Slaves
+## Minions
 
     $ sudo apt-get install git ruby ruby-dev
 
